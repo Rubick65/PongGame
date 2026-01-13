@@ -134,7 +134,6 @@ public class CollisionChecker {
                 ball.solidArea.width,
                 ball.solidArea.height
         );
-
     }
 
 }
