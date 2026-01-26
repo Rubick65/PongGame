@@ -23,7 +23,7 @@ public class CollisionChecker {
     public void calculateWallObstacles() {
         // Top wall and bottom wall
         wallObstacles.add(new Rectangle(0, -10, gamePanel.tileSize * gamePanel.maxScreenCol, 10));
-        wallObstacles.add(new Rectangle(0, gamePanel.screenHeight + 10, gamePanel.tileSize * gamePanel.maxScreenCol, 10));
+        wallObstacles.add(new Rectangle(0, gamePanel.screenHeight, gamePanel.tileSize * gamePanel.maxScreenCol, 10));
     }
 
     /**

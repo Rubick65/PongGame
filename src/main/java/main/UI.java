@@ -39,10 +39,12 @@ public class UI {
         String message = winnerPaddle + " WINS!";
         FontMetrics fm = g2.getFontMetrics();
         int messgeWidth = fm.stringWidth(message);
-        int x = gamePanel.screenWidth / 2 - messgeWidth /2 ;
-        int y = gamePanel.screenHeight / 2 - gamePanel.tileSize ;
+        int x = gamePanel.screenWidth / 2 - messgeWidth / 2;
+        int y = gamePanel.screenHeight / 2 - gamePanel.tileSize;
 
         g2.drawString(message, x, y);
         gamePanel.gameThread.interrupt();
+
+        Main.cerrarPartida();
     }
 }

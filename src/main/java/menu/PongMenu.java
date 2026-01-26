@@ -1,12 +1,17 @@
 package menu;
 
+import main.Main;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class PongMenu {
 
+    JFrame ventanaMenu;
+
     public PongMenu() {
-        JFrame ventanaMenu = new JFrame("Pong Menu");
+
+        ventanaMenu = new JFrame("Pong Menu");
         ventanaMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventanaMenu.setResizable(false);
 
@@ -14,24 +19,34 @@ public class PongMenu {
         ventanaMenu.pack();
         ventanaMenu.setLocationRelativeTo(null);
 
-        addComponents(ventanaMenu);
+        addComponents();
 
 
         ventanaMenu.setVisible(true);
     }
 
 
-    private void addComponents(JFrame ventanaMenu) {
-        createButtonPanel();
+    private void addComponents() {
 
-        ventanaMenu.add(buttonPanel());
+        ventanaMenu.add(createButtonPanel());
     }
 
 
-    private void createButtonPanel() {
+    private JPanel createButtonPanel() {
         JPanel buttonPanel = new JPanel(new BorderLayout());
+        buttonPanel.add(gameTitle(), BorderLayout.NORTH);
         buttonPanel.add(buttonPanel(), BorderLayout.CENTER);
-        
+        return buttonPanel;
+
+    }
+
+    private JPanel gameTitle() {
+        JPanel titlePanel = new JPanel(new GridBagLayout());
+        JLabel gameTitle = new JLabel("Pong Game", SwingConstants.CENTER);
+        gameTitle.setFont(new Font("Arial", Font.BOLD, 25));
+        titlePanel.add(gameTitle);
+
+        return titlePanel;
     }
 
 
@@ -41,6 +56,13 @@ public class PongMenu {
 
         JButton play = playButton("Play");
         JButton exit = playButton("Exit");
+
+        play.addActionListener(e -> {
+            Main.main(new String[]{});
+            ventanaMenu.dispose();
+        });
+
+        exit.addActionListener(e -> ventanaMenu.dispose());
 
         panel.add(play);
         panel.add(Box.createVerticalStrut(10));
