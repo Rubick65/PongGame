@@ -44,6 +44,7 @@ public class Ball extends Entity {
         if (ballWallCollision || ballPaddleCollision)
             gamePanel.soundEffect.play(0);
 
+        // Reacts to the paddle collision
         reactToBallPaddleCollision();
     }
 
