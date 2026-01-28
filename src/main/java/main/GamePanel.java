@@ -1,6 +1,7 @@
 package main;
 
-import ball.Ball;
+import entity.Ball;
+import entity.modificador.Modifier;
 import keyHandler.KeyHandler;
 import paddles.Paddle;
 
@@ -25,7 +26,10 @@ public class GamePanel extends JPanel implements Runnable {
     Paddle paddlePlayer1 = new Paddle(this, keyHandler, tileSize / 2, true);
     Paddle paddlePlayer2 = new Paddle(this, keyHandler, (screenWidth - tileSize) + ((tileSize / 2) - (tileSize / 3)), false);
     Paddle[] paddles = {paddlePlayer1, paddlePlayer2};
+
+
     Ball gameBall = new Ball(this);
+    Modifier genericModifier = new Modifier(this);
     public CollisionChecker collisionChecker = new CollisionChecker(this, paddles);
     GameRestarter gameRestarter = new GameRestarter(this);
     UI ui = new UI(this);
@@ -55,6 +59,7 @@ public class GamePanel extends JPanel implements Runnable {
         paddlePlayer1.update();
         paddlePlayer2.update();
         gameBall.update();
+        genericModifier.update();
     }
 
 
@@ -92,7 +97,6 @@ public class GamePanel extends JPanel implements Runnable {
     private void restartPosition() {
         if (this.gameBall.worldX < 0 || this.gameBall.worldX > screenWidth)
             this.gameRestarter.restart();
-
     }
 
     private void endGame(Graphics2D g2) {
@@ -114,6 +118,8 @@ public class GamePanel extends JPanel implements Runnable {
         endGame(g2);
 
         gameBall.draw(g2);
+
+        genericModifier.draw(g2);
 
 
         paddlePlayer1.draw(g2);

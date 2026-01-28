@@ -1,6 +1,6 @@
 package main;
 
-import ball.Ball;
+import entity.Entity;
 import paddles.Paddle;
 
 import java.awt.*;
@@ -67,50 +67,48 @@ public class CollisionChecker {
         }
     }
 
-    public void checkBallCollision(Ball ball) {
-        checkBallWallCollision(ball);
-        checkBallPaddleCollision(ball);
-
+    public void checkBallCollision(Entity entity) {
+        checkBallWallCollision(entity);
+        checkBallPaddleCollision(entity);
     }
 
-    private void checkBallWallCollision(Ball ball) {
-        Rectangle ballBox = createBallBox(ball);
+    private void checkBallWallCollision(Entity entity) {
+        Rectangle ballBox = createBallBox(entity);
 
         // Then we check in the list of obstacles
         for (Rectangle obstacle : wallObstacles) {
             // If the obstacle and the future box intersect
             if (ballBox.intersects(obstacle)) {
                 // The collision is active
-                ball.ballWallCollision = true;
+                entity.ballWallCollision = true;
                 return;
             }
         }
-        ball.ballWallCollision = false;
+        entity.ballWallCollision = false;
     }
 
-    public void checkBallPaddleCollision(Ball ball) {
-        Rectangle ballBox = createBallBox(ball);
+    public void checkBallPaddleCollision(Entity entity) {
+        Rectangle ballBox = createBallBox(entity);
 
         for (Paddle paddle : paddles) {
             Rectangle paddleBox = createPaddleBox(paddle);
             if (ballBox.intersects(paddleBox)) {
-
-                ball.ballPaddleCollision = true;
-                calculateMiddlePoint(ball, paddle);
+                entity.ballPaddleCollision = true;
+                calculateHitPoint(entity, paddle);
                 return;
             }
         }
-        ball.ballPaddleCollision = false;
+        entity.ballPaddleCollision = false;
 
     }
 
-    private Rectangle createBallBox(Ball ball) {
+    private Rectangle createBallBox(Entity entity) {
 
         return new Rectangle(
-                ball.worldX + ball.solidArea.x - ball.speedX,
-                ball.worldY + ball.solidArea.y - ball.speedY,
-                ball.solidArea.width,
-                ball.solidArea.height);
+                entity.worldX + entity.solidArea.x - entity.speedX,
+                entity.worldY + entity.solidArea.y - entity.speedY,
+                entity.solidArea.width,
+                entity.solidArea.height);
     }
 
     private Rectangle createPaddleBox(Paddle paddle) {
@@ -121,18 +119,17 @@ public class CollisionChecker {
                 paddle.solidArea.height);
     }
 
-    private void calculateMiddlePoint(Ball ball, Paddle paddle) {
-        hitPos = (ball.worldY + ball.solidArea.height / 2) - (paddle.worldY + paddle.solidArea.height / 2);
-//        System.out.println(hitPos);
+    private void calculateHitPoint(Entity entity, Paddle paddle) {
+        hitPos = (entity.worldY + entity.solidArea.height / 2) - (paddle.worldY + paddle.solidArea.height / 2);
     }
 
-    public void draw(Graphics2D g2, Ball ball) {
+    public void draw(Graphics2D g2, Entity entity) {
         g2.setColor(Color.BLUE);
         g2.drawRect(
-                ball.worldX + ball.solidArea.x - ball.speedX,
-                ball.worldY + ball.solidArea.y - ball.speedY,
-                ball.solidArea.width,
-                ball.solidArea.height
+                entity.worldX + entity.solidArea.x - entity.speedX,
+                entity.worldY + entity.solidArea.y - entity.speedY,
+                entity.solidArea.width,
+                entity.solidArea.height
         );
     }
 

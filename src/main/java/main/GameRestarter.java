@@ -1,7 +1,5 @@
 package main;
 
-import ball.Ball;
-
 public class GameRestarter {
     GamePanel gamePanel;
 
