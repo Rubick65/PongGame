@@ -23,6 +23,7 @@ public abstract class Entity {
 
     protected void checkBallCollision() {
         ballWallCollision = false;
+        ballPaddleCollision = false;
 
         gamePanel.collisionChecker.checkBallCollision(this);
 
@@ -43,6 +44,8 @@ public abstract class Entity {
         g2.setColor(Color.red);
         g2.drawRect(worldX + solidArea.x, worldY + solidArea.y, solidArea.width, solidArea.height);
     }
+
+
 
     public void update() {
         movement();

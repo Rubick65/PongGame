@@ -1,7 +1,7 @@
 package main;
 
 import entity.Ball;
-import entity.modificador.Modifier;
+import entity.modificador.BallVelocityUp;
 import keyHandler.KeyHandler;
 import paddles.Paddle;
 
@@ -28,8 +28,8 @@ public class GamePanel extends JPanel implements Runnable {
     Paddle[] paddles = {paddlePlayer1, paddlePlayer2};
 
 
-    Ball gameBall = new Ball(this);
-    Modifier genericModifier = new Modifier(this);
+    public Ball gameBall = new Ball(this);
+    BallVelocityUp gameBallVelocityUp = new BallVelocityUp(this);
     public CollisionChecker collisionChecker = new CollisionChecker(this, paddles);
     GameRestarter gameRestarter = new GameRestarter(this);
     UI ui = new UI(this);
@@ -59,7 +59,11 @@ public class GamePanel extends JPanel implements Runnable {
         paddlePlayer1.update();
         paddlePlayer2.update();
         gameBall.update();
-        genericModifier.update();
+
+        if (!gameBallVelocityUp.ballPaddleCollision)
+            gameBallVelocityUp.update();
+
+
     }
 
 
@@ -95,6 +99,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     private void restartPosition() {
+        // REFACTOR, CHANGE FOR A VARIABLE THAT INDICATES WHEN THIS CONDITION IS REACHED
         if (this.gameBall.worldX < 0 || this.gameBall.worldX > screenWidth)
             this.gameRestarter.restart();
     }
@@ -106,6 +111,7 @@ public class GamePanel extends JPanel implements Runnable {
             ui.drawWinner(g2, "PLAYER 2");
         }
     }
+
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -119,7 +125,8 @@ public class GamePanel extends JPanel implements Runnable {
 
         gameBall.draw(g2);
 
-        genericModifier.draw(g2);
+        if (!gameBallVelocityUp.ballPaddleCollision)
+            gameBallVelocityUp.draw(g2);
 
 
         paddlePlayer1.draw(g2);

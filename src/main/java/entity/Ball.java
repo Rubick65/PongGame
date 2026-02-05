@@ -7,6 +7,7 @@ import java.awt.*;
 public class Ball extends Entity {
 
     int originX, originY, originalSpeed;
+    private final int BALL_SPEED_UP = 2;
 
     public Ball(GamePanel gamePanel) {
         super(gamePanel, Color.white);
@@ -30,12 +31,8 @@ public class Ball extends Entity {
 
     private void ballFirstSide() {
         int randomNumber = (int) (Math.random() * 2);
+        speedX = randomNumber == 0 ? 10 : -10;
 
-        if (randomNumber == 0)
-            speedX = 10;
-        else {
-            speedX = -10;
-        }
     }
 
 
@@ -51,7 +48,10 @@ public class Ball extends Entity {
     private void reactToBallPaddleCollision() {
         if (ballPaddleCollision) {
             speedY = -((gamePanel.collisionChecker.hitPos / 3));
+            System.out.println(speedX);
             speedX = -speedX;
+            System.out.println(speedX);
+            System.out.println(speedX);
         }
     }
 
@@ -60,5 +60,10 @@ public class Ball extends Entity {
         worldY = originY;
         ballFirstSide();
         speedY = 0;
+    }
+
+    public void speedUp() {
+        speedX += speedX > 0 ? BALL_SPEED_UP : -BALL_SPEED_UP;
+        System.out.println("speedXUp: " + speedX);
     }
 }

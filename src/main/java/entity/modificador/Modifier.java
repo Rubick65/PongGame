@@ -6,10 +6,10 @@ import main.GamePanel;
 import java.awt.*;
 import java.util.Random;
 
-public class Modifier extends Entity {
+public abstract class Modifier extends Entity {
 
-    public Modifier(GamePanel gamePanel) {
-        super(gamePanel, Color.YELLOW);
+    public Modifier(GamePanel gamePanel, Color color) {
+        super(gamePanel, color);
         createOriginalRandomPosition();
         createOriginalRandomSpeed();
     }
@@ -28,15 +28,19 @@ public class Modifier extends Entity {
         Random random = new Random();
 
         int speedDirectionX = random.nextInt(2), speedDirectionY = random.nextInt(2);
-        int randomSpeedX = random.nextInt(5, 10), randomSpeedY = random.nextInt(1, 2);
+        int randomSpeedX = random.nextInt(7, 9), randomSpeedY = random.nextInt(0, 4);
 
         speedX = speedDirectionX == 1 ? randomSpeedX : randomSpeedX * -1;
         speedY = speedDirectionY == 1 ? randomSpeedY : randomSpeedY * -1;
-        System.out.println(speedX + " " + speedY);
     }
 
     @Override
     protected void collisionReaction() {
+        if (ballPaddleCollision)
+            modifierReaction();
 
     }
+
+    abstract public void modifierReaction();
+
 }
