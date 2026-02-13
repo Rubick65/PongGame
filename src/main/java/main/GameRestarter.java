@@ -23,7 +23,4 @@ public class GameRestarter {
         if (gamePanel.gameBall.worldX > gamePanel.screenWidth)
             gamePanel.paddlePlayer1.playerCounter += 1;
     }
-
-
-
 }

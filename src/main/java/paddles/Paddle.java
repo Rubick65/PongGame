@@ -72,11 +72,11 @@ public class Paddle {
 
     private void playerTwoMovement() {
         if (keyHandler.upPressed || keyHandler.downPressed) {
-            if (keyHandler.upPressed) {
+            if (keyHandler.upPressed)
                 direction = "up";
-            } else {
+            else
                 direction = "down";
-            }
+
             checkCollision();
         }
 

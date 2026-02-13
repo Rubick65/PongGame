@@ -1,7 +1,6 @@
 package main;
 
 import entity.Ball;
-import entity.modificador.BallVelocityUp;
 import keyHandler.KeyHandler;
 import paddles.Paddle;
 
@@ -29,7 +28,9 @@ public class GamePanel extends JPanel implements Runnable {
 
 
     public Ball gameBall = new Ball(this);
-    BallVelocityUp gameBallVelocityUp = new BallVelocityUp(this);
+
+    ModifierDriver modifierDriver = new ModifierDriver(this);
+    //    BallVelocityUp gameBallVelocityUp = new BallVelocityUp(this);
     public CollisionChecker collisionChecker = new CollisionChecker(this, paddles);
     GameRestarter gameRestarter = new GameRestarter(this);
     UI ui = new UI(this);
@@ -59,11 +60,7 @@ public class GamePanel extends JPanel implements Runnable {
         paddlePlayer1.update();
         paddlePlayer2.update();
         gameBall.update();
-
-        if (!gameBallVelocityUp.ballPaddleCollision)
-            gameBallVelocityUp.update();
-
-
+        modifierDriver.updateModifier();
     }
 
 
@@ -89,7 +86,6 @@ public class GamePanel extends JPanel implements Runnable {
             lastTime = currentTime;
 
             if (delta >= 1) {
-
                 update();
                 restartPosition();
                 repaint();
@@ -99,7 +95,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     private void restartPosition() {
-        // REFACTOR, CHANGE FOR A VARIABLE THAT INDICATES WHEN THIS CONDITION IS REACHED
+        // TODO REFACTOR, CHANGE FOR A VARIABLE THAT INDICATES WHEN THIS CONDITION IS REACHED
         if (this.gameBall.worldX < 0 || this.gameBall.worldX > screenWidth)
             this.gameRestarter.restart();
     }
@@ -125,9 +121,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         gameBall.draw(g2);
 
-        if (!gameBallVelocityUp.ballPaddleCollision)
-            gameBallVelocityUp.draw(g2);
-
+        modifierDriver.draw(g2);
 
         paddlePlayer1.draw(g2);
         paddlePlayer2.draw(g2);
@@ -145,6 +139,4 @@ public class GamePanel extends JPanel implements Runnable {
         // Then we put the thickness back to normal
         g2.setStroke(new BasicStroke(1));
     }
-
-
 }

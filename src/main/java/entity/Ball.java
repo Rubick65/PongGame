@@ -32,7 +32,6 @@ public class Ball extends Entity {
     private void ballFirstSide() {
         int randomNumber = (int) (Math.random() * 2);
         speedX = randomNumber == 0 ? 10 : -10;
-
     }
 
 
@@ -48,10 +47,7 @@ public class Ball extends Entity {
     private void reactToBallPaddleCollision() {
         if (ballPaddleCollision) {
             speedY = -((gamePanel.collisionChecker.hitPos / 3));
-            System.out.println(speedX);
             speedX = -speedX;
-            System.out.println(speedX);
-            System.out.println(speedX);
         }
     }
 

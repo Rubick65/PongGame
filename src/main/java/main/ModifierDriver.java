@@ -9,14 +9,12 @@ import java.util.Random;
 public class ModifierDriver {
 
     // UNIQUE CLASS VARIABLES
-    private GamePanel gamePanel;
-    private Modifier[] goodModifiers = new Modifier[3];
+    private final GamePanel gamePanel;
     private int modifierCounter = 0;
     private Modifier currentModifier;
-    private boolean selectedModifier = false;
     private boolean activeModifier = false;
     private int randomSleepTime;
-    private Random random = new Random();
+    private final Random random = new Random();
 
     // CONSTANTS
     private final int MINI_TIME = 3, MAXI_TIME = 7;
@@ -24,42 +22,50 @@ public class ModifierDriver {
 
     public ModifierDriver(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
-        addModifiers();
         this.randomSleepTime = random.nextInt(MINI_TIME, MAXI_TIME);
     }
 
-    private void addModifiers() {
-        try {
-            goodModifiers[0] = new BallVelocityUp(gamePanel);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw new ArrayIndexOutOfBoundsException("No more modifiers can be added");
-        }
+
+    public void updateModifier() {
+        if (activeModifier)
+            currentModifier.update();
     }
 
     public void draw(Graphics2D g2) {
 
-        if (!selectedModifier)
+        if (currentModifier == null)
             selectRandomModifier();
 
         if (activeModifier)
             currentModifier.draw(g2);
 
-        if (currentModifier != null && currentModifier.ballPaddleCollision)
-            selectedModifier = true;
+        if (currentModifier != null && currentModifier.ballPaddleCollision) {
+            currentModifier = null;
+            activeModifier = false;
+        }
 
     }
 
     private void selectRandomModifier() {
         modifierCounter++;
-        if (modifierCounter == randomSleepTime * SLEEP_TIME_MODIFIER) {
-            int randomModifierIndex = random.nextInt(goodModifiers.length);
+
+        if (modifierCounter == (randomSleepTime * SLEEP_TIME_MODIFIER)) {
+//            int randomModifierIndex = random.nextInt(goodModifiers.length);
             randomSleepTime = random.nextInt(MINI_TIME, MAXI_TIME);
 
-            currentModifier = goodModifiers[randomModifierIndex];
+            currentModifier = randomBeneficialModifierSelection(0);
 
             activeModifier = true;
-            selectedModifier = true;
             modifierCounter = 0;
         }
+    }
+
+    private Modifier randomBeneficialModifierSelection(int randomModifierIndex) {
+        Modifier selectedModifier;
+        switch (randomModifierIndex) {
+            case 0 -> selectedModifier = new BallVelocityUp(gamePanel);
+            default -> selectedModifier = null;
+        }
+        return selectedModifier;
     }
 }

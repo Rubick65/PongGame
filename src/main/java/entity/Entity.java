@@ -46,7 +46,6 @@ public abstract class Entity {
     }
 
 
-
     public void update() {
         movement();
         checkBallCollision();
