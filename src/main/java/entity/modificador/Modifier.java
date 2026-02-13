@@ -28,7 +28,7 @@ public abstract class Modifier extends Entity {
         Random random = new Random();
 
         int speedDirectionX = random.nextInt(2), speedDirectionY = random.nextInt(2);
-        int randomSpeedX = random.nextInt(6, 8), randomSpeedY = random.nextInt(0, 3);
+        int randomSpeedX = random.nextInt(6, 8), randomSpeedY = random.nextInt(0, 5);
 
         speedX = speedDirectionX == 1 ? randomSpeedX : randomSpeedX * -1;
         speedY = speedDirectionY == 1 ? randomSpeedY : randomSpeedY * -1;

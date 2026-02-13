@@ -17,12 +17,12 @@ public class ModifierDriver {
     private final Random random = new Random();
 
     // CONSTANTS
-    private final int MINI_TIME = 3, MAXI_TIME = 7;
+    private final int MINI_TIME = 6, MAXI_TIME = 10;
     private final int SLEEP_TIME_MODIFIER = 100;
 
     public ModifierDriver(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
-        this.randomSleepTime = random.nextInt(MINI_TIME, MAXI_TIME);
+        this.randomSleepTime = random.nextInt(MINI_TIME, MAXI_TIME) * SLEEP_TIME_MODIFIER;
     }
 
 
@@ -49,9 +49,9 @@ public class ModifierDriver {
     private void selectRandomModifier() {
         modifierCounter++;
 
-        if (modifierCounter == (randomSleepTime * SLEEP_TIME_MODIFIER)) {
+        if (modifierCounter == randomSleepTime) {
 //            int randomModifierIndex = random.nextInt(goodModifiers.length);
-            randomSleepTime = random.nextInt(MINI_TIME, MAXI_TIME);
+            randomSleepTime = random.nextInt(MINI_TIME, MAXI_TIME) * SLEEP_TIME_MODIFIER;
 
             currentModifier = randomBeneficialModifierSelection(0);
 
