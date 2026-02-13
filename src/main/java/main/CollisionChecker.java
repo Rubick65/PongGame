@@ -68,11 +68,12 @@ public class CollisionChecker {
     }
 
     public void checkBallCollision(Entity entity) {
-        checkBallWallCollision(entity);
+        checkBallYWallCollision(entity);
+        checkBallXWallCollision(entity);
         checkBallPaddleCollision(entity);
     }
 
-    private void checkBallWallCollision(Entity entity) {
+    private void checkBallYWallCollision(Entity entity) {
         Rectangle ballBox = createBallBox(entity);
 
         // Then we check in the list of obstacles
@@ -80,11 +81,16 @@ public class CollisionChecker {
             // If the obstacle and the future box intersect
             if (ballBox.intersects(obstacle)) {
                 // The collision is active
-                entity.ballWallCollision = true;
+                entity.entityYWallCollision = true;
                 return;
             }
         }
-        entity.ballWallCollision = false;
+        entity.entityYWallCollision = false;
+    }
+
+    private void checkBallXWallCollision(Entity entity) {
+        if (entity.worldX < 0 || entity.worldX > gamePanel.screenWidth)
+            entity.entityXWallCollision = true;
     }
 
     public void checkBallPaddleCollision(Entity entity) {
@@ -93,12 +99,12 @@ public class CollisionChecker {
         for (Paddle paddle : paddles) {
             Rectangle paddleBox = createPaddleBox(paddle);
             if (ballBox.intersects(paddleBox)) {
-                entity.ballPaddleCollision = true;
+                entity.entityPaddleCollision = true;
                 calculateHitPoint(entity, paddle);
                 return;
             }
         }
-        entity.ballPaddleCollision = false;
+        entity.entityPaddleCollision = false;
 
     }
 

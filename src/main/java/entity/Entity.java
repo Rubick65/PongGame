@@ -12,8 +12,8 @@ public abstract class Entity {
     public int worldX, worldY;
     public int speedX, speedY;
     public Rectangle solidArea;
-    public boolean ballWallCollision;
-    public boolean ballPaddleCollision;
+    public boolean entityYWallCollision, entityXWallCollision;
+    public boolean entityPaddleCollision;
 
     public Entity(GamePanel gamePanel, Color color) {
         this.gamePanel = gamePanel;
@@ -22,8 +22,9 @@ public abstract class Entity {
     }
 
     protected void checkBallCollision() {
-        ballWallCollision = false;
-        ballPaddleCollision = false;
+        entityYWallCollision = false;
+        entityXWallCollision = false;
+        entityPaddleCollision = false;
 
         gamePanel.collisionChecker.checkBallCollision(this);
 
@@ -32,7 +33,7 @@ public abstract class Entity {
     }
 
     protected void reactToWallCollision() {
-        if (ballWallCollision)
+        if (entityYWallCollision)
             speedY = -speedY;
     }
 
@@ -44,7 +45,6 @@ public abstract class Entity {
         g2.setColor(Color.red);
         g2.drawRect(worldX + solidArea.x, worldY + solidArea.y, solidArea.width, solidArea.height);
     }
-
 
     public void update() {
         movement();

@@ -95,8 +95,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     private void restartPosition() {
-        // TODO REFACTOR, CHANGE FOR A VARIABLE THAT INDICATES WHEN THIS CONDITION IS REACHED
-        if (this.gameBall.worldX < 0 || this.gameBall.worldX > screenWidth)
+        if (this.gameBall.entityXWallCollision)
             this.gameRestarter.restart();
     }
 

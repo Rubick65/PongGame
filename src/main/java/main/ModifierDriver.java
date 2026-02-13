@@ -33,13 +33,13 @@ public class ModifierDriver {
 
     public void draw(Graphics2D g2) {
 
-        if (currentModifier == null)
+        if (currentModifier == null || currentModifier.entityXWallCollision)
             selectRandomModifier();
 
         if (activeModifier)
             currentModifier.draw(g2);
 
-        if (currentModifier != null && currentModifier.ballPaddleCollision) {
+        if (currentModifier != null && currentModifier.entityPaddleCollision) {
             currentModifier = null;
             activeModifier = false;
         }

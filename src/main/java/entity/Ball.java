@@ -37,7 +37,7 @@ public class Ball extends Entity {
 
     @Override
     protected void collisionReaction() {
-        if (ballWallCollision || ballPaddleCollision)
+        if (entityYWallCollision || entityPaddleCollision)
             gamePanel.soundEffect.play(0);
 
         // Reacts to the paddle collision
@@ -45,7 +45,7 @@ public class Ball extends Entity {
     }
 
     private void reactToBallPaddleCollision() {
-        if (ballPaddleCollision) {
+        if (entityPaddleCollision) {
             speedY = -((gamePanel.collisionChecker.hitPos / 3));
             speedX = -speedX;
         }
