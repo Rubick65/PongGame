@@ -16,7 +16,7 @@ public class Paddle {
     private int originalX, originalY;
     public int playerCounter = 0;
 
-    public int speed;
+    public int speed, originalSpeed;
     boolean player;
 
     // Direction that the paddle is moving
@@ -26,7 +26,7 @@ public class Paddle {
     public Rectangle solidArea;
 
     // Detector de colisiones
-    public boolean collision;
+    public boolean collision, modifierCollision;
 
 
     public Paddle(GamePanel gamePanel, KeyHandler keyHandler, int worldX, boolean player) {
@@ -45,10 +45,11 @@ public class Paddle {
         originalX = worldX;
         originalY = worldY;
         speed = 7;
+        originalSpeed = speed;
+        modifierCollision = false;
     }
 
     public void update() {
-
         if (player)
             playerOneMovement();
         else
@@ -58,11 +59,11 @@ public class Paddle {
 
     private void playerOneMovement() {
         if (keyHandler.wPressed || keyHandler.sPressed) {
-            if (keyHandler.wPressed) {
+            if (keyHandler.wPressed)
                 direction = "up";
-            } else if (keyHandler.sPressed) {
+            else if (keyHandler.sPressed)
                 direction = "down";
-            }
+
 
             checkCollision();
 
@@ -115,6 +116,16 @@ public class Paddle {
     public void restartPaddleOriginalPositions() {
         worldX = originalX;
         worldY = originalY;
+        speed = originalSpeed;
     }
 
+    public void paddleVelocityUp() {
+        int PADDLE_SPEED_UP = 2;
+        this.speed += speed > 0 ? PADDLE_SPEED_UP : -PADDLE_SPEED_UP;
+    }
+
+    public void restarPaddleSpeed() {
+        speed = originalSpeed;
+        modifierCollision = false;
+    }
 }

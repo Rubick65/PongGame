@@ -7,7 +7,6 @@ import java.awt.*;
 public class Ball extends Entity {
 
     int originX, originY, originalSpeed;
-    private final int BALL_SPEED_UP = 2;
 
     public Ball(GamePanel gamePanel) {
         super(gamePanel, Color.white);
@@ -59,6 +58,7 @@ public class Ball extends Entity {
     }
 
     public void speedUp() {
+        int BALL_SPEED_UP = 2;
         speedX += speedX > 0 ? BALL_SPEED_UP : -BALL_SPEED_UP;
         System.out.println("speedXUp: " + speedX);
     }

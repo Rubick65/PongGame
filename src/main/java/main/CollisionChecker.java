@@ -1,5 +1,6 @@
 package main;
 
+import entity.Ball;
 import entity.Entity;
 import paddles.Paddle;
 
@@ -9,10 +10,11 @@ import java.util.List;
 
 public class CollisionChecker {
 
-    List<Rectangle> wallObstacles = new ArrayList<>();
-    Paddle[] paddles;
+    private final List<Rectangle> wallObstacles = new ArrayList<>();
+    public Paddle collidedPallet;
+    private final Paddle[] paddles;
     public int hitPos;
-    GamePanel gamePanel;
+    private final GamePanel gamePanel;
 
     public CollisionChecker(GamePanel gamePanel, Paddle[] paddles) {
         this.gamePanel = gamePanel;
@@ -100,6 +102,11 @@ public class CollisionChecker {
             Rectangle paddleBox = createPaddleBox(paddle);
             if (ballBox.intersects(paddleBox)) {
                 entity.entityPaddleCollision = true;
+
+                if (paddle.modifierCollision && entity instanceof Ball)
+                    paddle.restarPaddleSpeed();
+
+                collidedPallet = paddle;
                 calculateHitPoint(entity, paddle);
                 return;
             }

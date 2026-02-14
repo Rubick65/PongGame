@@ -27,10 +27,10 @@ public class GamePanel extends JPanel implements Runnable {
     Paddle[] paddles = {paddlePlayer1, paddlePlayer2};
 
 
+
     public Ball gameBall = new Ball(this);
 
     ModifierDriver modifierDriver = new ModifierDriver(this);
-    //    BallVelocityUp gameBallVelocityUp = new BallVelocityUp(this);
     public CollisionChecker collisionChecker = new CollisionChecker(this, paddles);
     GameRestarter gameRestarter = new GameRestarter(this);
     UI ui = new UI(this);
