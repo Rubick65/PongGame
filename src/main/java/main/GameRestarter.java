@@ -14,6 +14,7 @@ public class GameRestarter {
         gamePanel.paddlePlayer2.restartPaddleOriginalPositions();
 
         gamePanel.gameBall.restarBallOriginalPosition();
+        gamePanel.modifierDriver.restartModifierPosition();
     }
 
     public void addPoints() {

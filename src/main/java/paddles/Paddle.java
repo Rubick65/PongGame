@@ -25,7 +25,7 @@ public class Paddle {
     // Indicates the area of the hitbox
     public Rectangle solidArea;
 
-    // Detector de colisiones
+    // Collision detector
     public boolean collision, modifierCollision;
 
 
@@ -35,17 +35,20 @@ public class Paddle {
         this.direction = "down";
         this.worldX = worldX;
         this.player = player;
-        solidArea = new Rectangle(0, 0, gamePanel.tileSize / 3, gamePanel.tileSize * 2);
+        this.solidArea = new Rectangle(0, 0, gamePanel.tileSize / 3, gamePanel.tileSize * 2);
         setDefaultValues();
     }
 
     public void setDefaultValues() {
         int size = gamePanel.tileSize * 2;
         worldY = (gamePanel.screenHeight / 2) - size / 2;
+
         originalX = worldX;
         originalY = worldY;
+
         speed = 7;
         originalSpeed = speed;
+
         modifierCollision = false;
     }
 
@@ -64,11 +67,8 @@ public class Paddle {
             else if (keyHandler.sPressed)
                 direction = "down";
 
-
             checkCollision();
-
         }
-
     }
 
     private void playerTwoMovement() {
@@ -80,7 +80,6 @@ public class Paddle {
 
             checkCollision();
         }
-
     }
 
     private void checkCollision() {
@@ -98,9 +97,7 @@ public class Paddle {
                 default:
                     break;
             }
-
         }
-
     }
 
     public void draw(Graphics2D g2) {
@@ -116,11 +113,11 @@ public class Paddle {
     public void restartPaddleOriginalPositions() {
         worldX = originalX;
         worldY = originalY;
-        speed = originalSpeed;
+        restarPaddleSpeed();
     }
 
     public void paddleVelocityUp() {
-        int PADDLE_SPEED_UP = 2;
+        int PADDLE_SPEED_UP = 4;
         this.speed += speed > 0 ? PADDLE_SPEED_UP : -PADDLE_SPEED_UP;
     }
 

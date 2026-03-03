@@ -27,7 +27,6 @@ public class GamePanel extends JPanel implements Runnable {
     Paddle[] paddles = {paddlePlayer1, paddlePlayer2};
 
 
-
     public Ball gameBall = new Ball(this);
 
     ModifierDriver modifierDriver = new ModifierDriver(this);
@@ -75,22 +74,37 @@ public class GamePanel extends JPanel implements Runnable {
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
+//        int drawCount = 0;
+//        long timer = 0;
 
         while (gameThread.isAlive()) {
-            if (gameThread.isInterrupted()) {
+            if (gameThread.isInterrupted())
                 break;
-            }
+
 
             currentTime = System.nanoTime();
             delta += (double) (currentTime - lastTime) / drawInterval;
+//            timer += (currentTime - lastTime);
             lastTime = currentTime;
 
             if (delta >= 1) {
                 update();
                 restartPosition();
+                System.out.println();
                 repaint();
                 delta--;
+//                drawCount++;
             }
+
+//            // If one second has passed only used for fps count
+//            if (timer >= oneSecondInMilliseconds) {
+//                // We show the times that the game has been painted
+//                System.out.println("FPS: " + drawCount);
+//                // And we put all the variables that shows the fps to cero
+//                drawCount = 0;
+//                timer = 0;
+//            }
+
         }
     }
 

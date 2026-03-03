@@ -1,6 +1,7 @@
 package main;
 
 import entity.modificador.GoodModifiers.BallVelocityUp;
+import entity.modificador.GoodModifiers.PaddleDirectionChange;
 import entity.modificador.GoodModifiers.PaddleVelocityUp;
 import entity.modificador.Modifier;
 
@@ -18,8 +19,9 @@ public class ModifierDriver {
     private final Random random = new Random();
 
     // CONSTANTS
-    private final int MINI_TIME = 1, MAXI_TIME = 2;
+    private final int MINI_TIME = 6, MAXI_TIME = 10;
     private final int SLEEP_TIME_MODIFIER = 100;
+
 
     public ModifierDriver(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -54,10 +56,10 @@ public class ModifierDriver {
         modifierCounter++;
 
         if (modifierCounter == randomSleepTime) {
-            int randomModifierIndex = random.nextInt(2);
+            int randomModifierIndex = random.nextInt(3);
             randomSleepTime = random.nextInt(MINI_TIME, MAXI_TIME) * SLEEP_TIME_MODIFIER;
 
-            currentModifier = randomBeneficialModifierSelection(1);
+            currentModifier = randomBeneficialModifierSelection(randomModifierIndex);
 
             activeModifier = true;
             modifierCounter = 0;
@@ -69,8 +71,16 @@ public class ModifierDriver {
         switch (randomModifierIndex) {
             case 0 -> selectedModifier = new BallVelocityUp(gamePanel);
             case 1 -> selectedModifier = new PaddleVelocityUp(gamePanel);
+            case 2 -> selectedModifier = new PaddleDirectionChange(gamePanel);
             default -> selectedModifier = null;
         }
         return selectedModifier;
     }
+
+    public void restartModifierPosition() {
+        currentModifier = null;
+        activeModifier = false;
+    }
+
+
 }

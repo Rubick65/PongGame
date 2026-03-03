@@ -15,6 +15,5 @@ public class PaddleVelocityUp extends Modifier {
     protected void modifierReaction() {
         this.gamePanel.collisionChecker.collidedPallet.paddleVelocityUp();
         this.gamePanel.collisionChecker.collidedPallet.modifierCollision = true;
-        System.out.println(this.gamePanel.collisionChecker.collidedPallet.speed);
     }
 }
