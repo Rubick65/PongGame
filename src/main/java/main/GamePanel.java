@@ -53,15 +53,13 @@ public class GamePanel extends JPanel implements Runnable {
         // This makes that the game can receive inputs from the user
         this.setFocusable(true);
     }
-
-
+    
     public void update() {
         paddlePlayer1.update();
         paddlePlayer2.update();
         gameBall.update();
         modifierDriver.updateModifier();
     }
-
 
     public void startGameThread() {
         gameThread = new Thread(this);
@@ -114,11 +112,12 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     private void endGame(Graphics2D g2) {
-        if (this.paddlePlayer1.playerCounter == 5) {
+
+        if (this.paddlePlayer1.playerCounter == 5)
             ui.drawWinner(g2, "PLAYER 1");
-        } else if (this.paddlePlayer2.playerCounter == 5) {
+        else if (this.paddlePlayer2.playerCounter == 5)
             ui.drawWinner(g2, "PLAYER 2");
-        }
+
     }
 
 

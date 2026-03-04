@@ -1,9 +1,9 @@
 package main;
 
-import entity.modificador.GoodModifiers.BallVelocityUp;
-import entity.modificador.GoodModifiers.PaddleDirectionChange;
-import entity.modificador.GoodModifiers.PaddleVelocityUp;
-import entity.modificador.Modifier;
+import entity.modifiers.GoodModifiers.BallVelocityUp;
+import entity.modifiers.GoodModifiers.PaddleDirectionChange;
+import entity.modifiers.GoodModifiers.PaddleVelocityUp;
+import entity.modifiers.Modifier;
 
 import java.awt.*;
 import java.util.Random;
@@ -12,13 +12,14 @@ public class ModifierDriver {
 
     // UNIQUE CLASS VARIABLES
     private final GamePanel gamePanel;
-    private int modifierCounter = 0;
+    private int modifierCounter = 0, startUpdateCounter = 0;
     private Modifier currentModifier;
     private boolean activeModifier = false;
     private int randomSleepTime;
     private final Random random = new Random();
 
     // CONSTANTS
+    private final int TIME_BEFORE_UPDATE = 50;
     private final int MINI_TIME = 6, MAXI_TIME = 10;
     private final int SLEEP_TIME_MODIFIER = 100;
 
@@ -28,10 +29,13 @@ public class ModifierDriver {
         this.randomSleepTime = random.nextInt(MINI_TIME, MAXI_TIME) * SLEEP_TIME_MODIFIER;
     }
 
-
     public void updateModifier() {
-        if (activeModifier)
+        if (updateModifierCondition())
             currentModifier.update();
+    }
+
+    private boolean updateModifierCondition() {
+        return activeModifier && (startUpdateCounter >= TIME_BEFORE_UPDATE);
     }
 
     public void draw(Graphics2D g2) {
@@ -39,12 +43,15 @@ public class ModifierDriver {
         if (currentModifier == null || currentModifier.entityXWallCollision)
             selectRandomModifier();
 
-        if (activeModifier)
+        if (activeModifier) {
+            startUpdateCounter++;
             currentModifier.draw(g2);
+        }
 
         if (newModifierCondition()) {
             currentModifier = null;
             activeModifier = false;
+            startUpdateCounter = 0;
         }
     }
 
@@ -68,12 +75,14 @@ public class ModifierDriver {
 
     private Modifier randomBeneficialModifierSelection(int randomModifierIndex) {
         Modifier selectedModifier;
+
         switch (randomModifierIndex) {
             case 0 -> selectedModifier = new BallVelocityUp(gamePanel);
             case 1 -> selectedModifier = new PaddleVelocityUp(gamePanel);
             case 2 -> selectedModifier = new PaddleDirectionChange(gamePanel);
             default -> selectedModifier = null;
         }
+
         return selectedModifier;
     }
 
@@ -81,6 +90,4 @@ public class ModifierDriver {
         currentModifier = null;
         activeModifier = false;
     }
-
-
 }

@@ -64,7 +64,7 @@ public class Paddle {
         if (keyHandler.wPressed || keyHandler.sPressed) {
             if (keyHandler.wPressed)
                 direction = "up";
-            else if (keyHandler.sPressed)
+            else
                 direction = "down";
 
             checkCollision();

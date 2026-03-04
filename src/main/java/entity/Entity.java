@@ -37,7 +37,6 @@ public abstract class Entity {
             speedY = -speedY;
     }
 
-
     public void draw(Graphics2D g2) {
         g2.setColor(color);
         g2.fillOval(worldX, worldY, gamePanel.tileSize / 3, gamePanel.tileSize / 3);

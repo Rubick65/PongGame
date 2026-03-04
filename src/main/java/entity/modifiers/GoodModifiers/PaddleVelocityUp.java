@@ -1,6 +1,6 @@
-package entity.modificador.GoodModifiers;
+package entity.modifiers.GoodModifiers;
 
-import entity.modificador.Modifier;
+import entity.modifiers.Modifier;
 import main.GamePanel;
 
 import java.awt.*;

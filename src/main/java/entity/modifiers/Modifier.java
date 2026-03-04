@@ -1,4 +1,4 @@
-package entity.modificador;
+package entity.modifiers;
 
 import entity.Entity;
 import main.GamePanel;
